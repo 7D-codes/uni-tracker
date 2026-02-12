@@ -1,0 +1,506 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-600: #4b5563;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.6;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  background: white;
+  border-bottom: 1px solid var(--gray-200);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  color: var(--gray-900);
+}
+
+.nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: transparent;
+  color: var(--gray-600);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.nav button:hover {
+  background: var(--gray-100);
+}
+
+.nav button.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* Main */
+.main {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Dashboard */
+.dashboard h2 {
+  margin-bottom: 1.5rem;
+  color: var(--gray-900);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.stat-card.total { border-top: 4px solid var(--primary); }
+.stat-card.accepted { border-top: 4px solid var(--success); }
+.stat-card.applied { border-top: 4px solid var(--primary); }
+.stat-card.planning { border-top: 4px solid var(--warning); }
+.stat-card.researching { border-top: 4px solid var(--gray-300); }
+.stat-card.rejected { border-top: 4px solid var(--danger); }
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--gray-900);
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  margin-top: 0.25rem;
+}
+
+.quick-actions {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.quick-actions h3 {
+  margin-bottom: 1rem;
+  color: var(--gray-900);
+}
+
+.quick-actions ul {
+  list-style: none;
+}
+
+.quick-actions li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.quick-actions li:last-child {
+  border-bottom: none;
+}
+
+/* University List */
+.university-list h2 {
+  margin-bottom: 1.5rem;
+  color: var(--gray-900);
+}
+
+.universities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.university-card {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.uni-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.uni-ranking {
+  background: var(--primary);
+  color: white;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 0.875rem;
+}
+
+.uni-title {
+  flex: 1;
+}
+
+.uni-title h3 {
+  font-size: 1.1rem;
+  color: var(--gray-900);
+}
+
+.uni-country {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.uni-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: white;
+  text-transform: capitalize;
+}
+
+.uni-details p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.uni-details strong {
+  color: var(--gray-600);
+}
+
+.uni-notes {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: var(--gray-100);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.uni-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.uni-actions button {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--gray-200);
+  background: white;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.uni-actions button:hover {
+  background: var(--gray-100);
+}
+
+.uni-actions button.delete {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.uni-actions button.delete:hover {
+  background: #fef2f2;
+}
+
+/* Edit Form */
+.edit-form input,
+.edit-form select,
+.edit-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--gray-200);
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.edit-form textarea {
+  resize: vertical;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-actions button {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.edit-actions button:first-child {
+  background: var(--primary);
+  color: white;
+}
+
+.edit-actions button:last-child {
+  background: var(--gray-100);
+}
+
+/* Add University Form */
+.add-university h2 {
+  margin-bottom: 1.5rem;
+  color: var(--gray-900);
+}
+
+.form-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.form-section h3 {
+  margin-bottom: 1rem;
+  color: var(--gray-800);
+  font-size: 1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-row label {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.add-university input,
+.add-university select,
+.add-university textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--gray-200);
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.add-university input:focus,
+.add-university select:focus,
+.add-university textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.submit-btn:hover {
+  background: var(--primary-dark);
+}
+
+/* Tasks */
+.tasks h2 {
+  margin-bottom: 1.5rem;
+  color: var(--gray-900);
+}
+
+.add-task-form {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr auto;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.add-task-form input,
+.add-task-form select {
+  padding: 0.5rem;
+  border: 1px solid var(--gray-200);
+  border-radius: 0.5rem;
+}
+
+.add-task-form button {
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.tasks-list {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+.task-item.done {
+  opacity: 0.6;
+}
+
+.task-item.overdue {
+  background: #fef2f2;
+}
+
+.task-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.task-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.task-title {
+  font-weight: 500;
+}
+
+.task-title.done {
+  text-decoration: line-through;
+  color: var(--gray-600);
+}
+
+.task-desc {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.task-due {
+  font-size: 0.75rem;
+  color: var(--gray-600);
+}
+
+.task-due.overdue {
+  color: var(--danger);
+  font-weight: 500;
+}
+
+.delete-task {
+  background: none;
+  border: none;
+  color: var(--gray-400);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 0.5rem;
+}
+
+.delete-task:hover {
+  color: var(--danger);
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: var(--gray-600);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .nav {
+    flex-wrap: wrap;
+  }
+  
+  .main {
+    padding: 1rem;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .add-task-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .universities-grid {
+    grid-template-columns: 1fr;
+  }
+}
