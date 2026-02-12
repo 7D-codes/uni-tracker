@@ -14,8 +14,7 @@ A full-stack web app for tracking university applications with deadlines, requir
 
 - **Frontend:** React + TypeScript + Vite
 - **Backend:** Express + Node.js
-- **Database:** SQLite (local) / PostgreSQL (production)
-- **ORM:** Drizzle ORM
+- **Database:** JSON file (simple, portable)
 - **Deployment:** Vercel
 
 ## Development
@@ -37,9 +36,28 @@ npm run dev
 ## Deployment
 
 1. Push to GitHub
+   ```bash
+   git remote add origin https://github.com/YOUR_USERNAME/uni-tracker.git
+   git push -u origin main
+   ```
+
 2. Connect to Vercel
-3. Set environment variables if needed
-4. Deploy
+   - Go to [vercel.com](https://vercel.com)
+   - Import your GitHub repo
+   - Framework preset: Vite
+   - Build command: `npm run build`
+   - Output directory: `dist`
+
+3. Deploy!
+
+## Local Development
+
+```bash
+npm install
+npm run dev
+```
+
+Then open http://localhost:5173 (frontend) and http://localhost:3001 (API)
 
 ## API Endpoints
 
