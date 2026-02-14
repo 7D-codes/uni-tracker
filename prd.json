@@ -1,0 +1,70 @@
+{
+  "version": "1.0",
+  "project": "uni-tracker",
+  "description": "University application tracking dashboard with AI-assisted task management",
+  "updated": "2026-02-14",
+  "stories": [
+    {
+      "id": "UT-001",
+      "title": "Profile Tab — Personal Requirements Tracking",
+      "description": "New tab to track user's personal status: test scores, documents, deadlines. Shows what's complete vs missing across all applications.",
+      "acceptance": [
+        "Profile tab in navigation",
+        "Editable fields: SAT score (target vs actual), IELTS/TOEFL, transcripts, recommendations, personal statement, application fee status",
+        "Visual indicators: complete (green), in-progress (yellow), missing (red)",
+        "Progress bar showing overall readiness %",
+        "Data persists to SQLite"
+      ],
+      "status": "done",
+      "priority": "high",
+      "notes": "Backend complete: GET /api/profile, POST /api/profile, GET /api/profile/readiness endpoints. ProfileService with default profile creation and readiness score calculation."
+    },
+    {
+      "id": "UT-002",
+      "title": "AI-Populated Task Suggestions",
+      "description": "Auto-generate task recommendations based on university requirements and user's missing items. Not full AI — just smart defaults.",
+      "acceptance": [
+        "When adding a university, auto-create tasks based on its requirements",
+        "Tasks linked to both university and global profile items",
+        "Example: 'Stanford requires SAT — schedule test' if profile.sat_score is null",
+        "Example: 'Upload transcript' if profile.transcript is false",
+        "Tasks have: title, description, due date (calculated from deadline), status, linked_university_id, linked_profile_item",
+        "User can accept, edit, or delete suggested tasks"
+      ],
+      "status": "done",
+      "priority": "high",
+      "notes": "TaskGenerator service implemented with generateTasksForUniversity() and generateTasksForProfileUpdate(). Tasks auto-created when university added or profile updated. POST /api/universities/:id/generate-tasks endpoint available for manual generation."
+    },
+    {
+      "id": "UT-003",
+      "title": "University Detail View with Requirement Matching",
+      "description": "Click a university to see full details + which requirements you meet vs which you're missing.",
+      "acceptance": [
+        "Modal or page showing university full details",
+        "Requirements section listing: SAT needed? (yes/no + your score), Transcripts? (status), Essays? (count + status)",
+        "Color-coded: green = complete, yellow = partial, red = missing",
+        "Quick links to edit profile items from this view",
+        "Show application deadline countdown",
+        "Related tasks for this university"
+      ],
+      "status": "todo",
+      "priority": "high",
+      "notes": "Backend support ready (universities.requirements JSON, profile data, tasks). Frontend feature - reads from universities table + profile table + tasks table."
+    },
+    {
+      "id": "UT-004",
+      "title": "Database Schema Updates",
+      "description": "Extend SQLite schema to support new features",
+      "acceptance": [
+        "New table: profile (id, sat_target, sat_actual, ielts_score, toefl_score, transcript_status, recommendations_count, statement_status, fee_budget, updated_at)",
+        "Update universities table: add requirements JSON field (flexible schema per uni)",
+        "New table: tasks (id, title, description, due_date, status, university_id, profile_item_type, created_at, completed_at)",
+        "Migration script that preserves existing 7 universities"
+      ],
+      "status": "done",
+      "priority": "high",
+      "blocking": true,
+      "notes": "Migration system with schema_migrations table. Migration 2 adds profile table, requirements column to universities, profileItemType to tasks. All 7 existing universities preserved with requirements JSON populated from existing columns."
+    }
+  ]
+}
