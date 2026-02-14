@@ -13,7 +13,10 @@ export interface University {
   country: string;
   program: string;
   major: string;
-  ranking?: number;
+  ranking?: number; // Overall university ranking
+  rankingAI?: number; // AI program ranking
+  rankingCS?: number; // CS program ranking
+  rankingDataAnalytics?: number; // Data Analytics/Data Science ranking
   deadlineEarly?: string;
   deadlineRegular?: string;
   deadlineTransfer?: string;
@@ -28,6 +31,8 @@ export interface University {
   essaysRequired?: number;
   recLettersRequired?: number;
   interviewRequired?: number;
+  tuitionAmount?: number; // Annual tuition cost
+  currency?: string; // USD, GBP, SAR, etc.
   status: string;
   priority: string;
   notes?: string;
@@ -252,6 +257,35 @@ async function runMigrations() {
     
     await run(db, 'INSERT INTO schema_migrations (version, appliedAt) VALUES (?, ?)', [2, new Date().toISOString()]);
     console.log('✅ Migration 2 complete');
+  }
+  
+  // Migration 3: Add program-specific rankings and cost info
+  if (currentVersion < 3) {
+    console.log('🔄 Running migration 3: Add program rankings and cost fields...');
+    
+    const newColumns = [
+      { name: 'rankingAI', type: 'INTEGER' },
+      { name: 'rankingCS', type: 'INTEGER' },
+      { name: 'rankingDataAnalytics', type: 'INTEGER' },
+      { name: 'tuitionAmount', type: 'INTEGER' },
+      { name: 'currency', type: 'TEXT' }
+    ];
+    
+    for (const col of newColumns) {
+      try {
+        await run(db, `ALTER TABLE universities ADD COLUMN ${col.name} ${col.type}`);
+        console.log(`✅ Added ${col.name} column`);
+      } catch (e) {
+        console.log(`ℹ️ ${col.name} column already exists`);
+      }
+    }
+    
+    // Update all universities to Data Analytics major
+    await run(db, "UPDATE universities SET major = 'Data Analytics' WHERE major != 'Data Analytics'");
+    console.log('✅ Updated all majors to Data Analytics');
+    
+    await run(db, 'INSERT INTO schema_migrations (version, appliedAt) VALUES (?, ?)', [3, new Date().toISOString()]);
+    console.log('✅ Migration 3 complete');
   }
 }
 
