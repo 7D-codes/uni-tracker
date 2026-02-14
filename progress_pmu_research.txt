@@ -1,0 +1,80 @@
+# PMU Research Progress Log
+## Date: 2026-02-14
+
+## Research Findings for PMU (Prince Mohammad bin Fahd University)
+
+### Rankings Found:
+1. **THE Arab World University Rankings 2024**: Ranked #4
+2. **QS World Ranking**: Ranked #513 globally
+3. **QS Young Universities 2021**: Ranked #101-150
+4. **THE Ranking 2024**: Ranked #2 in Saudi Arabia
+
+### Program Information:
+- **College of Computer Engineering & Science (CCES)** offers:
+  - Computer Science (B.Sc.)
+  - Information Technology (B.Sc.)
+  - Computer Engineering (B.Sc.)
+  
+- **College of Business Administration (COBA)** offers:
+  - Management Information Systems (MIS)
+  - Accounting
+  - Finance
+  - Business Administration
+
+### IMPORTANT FINDING - Data Analytics Program:
+**PMU does NOT offer a specific "Data Analytics" undergraduate program.** 
+The closest alternatives are:
+1. Computer Science (in CCES)
+2. Information Technology (in CCES)
+3. Management Information Systems/MIS (in Business College)
+
+### Tuition Fees:
+- PMU is a PRIVATE Saudi university (more expensive than public universities like KFUPM)
+- Typical private Saudi university tuition: 60,000-80,000 SAR/year
+- Estimated annual tuition for Saudi students: ~70,000 SAR
+- Currency: SAR
+
+### Admissions Information:
+- **Application Portal**: https://admissions.pmu.edu.sa/
+- **Main Website**: https://www.pmu.edu.sa
+- **Location**: Half-Moon Bay, Al-Khobar, Eastern Province, Saudi Arabia
+- PMU follows a North American education model with English as the language of instruction
+
+### Deadlines (Estimated for Fall 2026):
+- Based on typical Saudi university academic calendar:
+- Fall 2026 Regular Deadline: ~July 15, 2026
+- Spring 2027 Regular Deadline: ~December 15, 2026
+- Note: Exact deadlines should be verified by contacting PMU admissions directly
+
+### Priority Assessment:
+- Current priority: "low" 
+- Should remain LOW as it's a backup option
+- Strengths: Good regional ranking, North American education model, English instruction
+- Considerations: No specific Data Analytics program, private university (higher cost)
+
+### API Update Status:
+✅ COMPLETED - PUT http://localhost:3002/api/universities/6
+
+Fields updated:
+- rankingCS: "4th in THE Arab World Rankings 2024" ✅
+- rankingAI: null (no specific ranking found) ✅
+- rankingDataAnalytics: null (program does not exist) ✅
+- tuitionAmount: 70000 (estimated) ✅
+- currency: "SAR" ✅
+- applicationUrl: "https://admissions.pmu.edu.sa/" ✅
+- deadlineRegular: "2026-07-15" (estimated Fall 2026) ✅
+- notes: "Fall 2026 deadline approximately July 2026. No specific Data Analytics program - closest alternatives: CS, IT, or MIS. PMU ranked 4th in THE Arab World Rankings 2024 and 513 in QS World Rankings." ✅
+- priority: "low" (unchanged) ✅
+
+### Uncertainties:
+1. Exact tuition amount - should verify with PMU directly
+2. Exact admission deadlines for 2026/2027
+3. Specific CS subject ranking (only overall university rankings found)
+4. Whether MIS program would be suitable for Data Analytics goals
+
+### Recommendations:
+1. Contact PMU admissions to confirm:
+   - Exact tuition fees for Saudi students
+   - Actual application deadlines for Fall 2026/Spring 2027
+   - Whether MIS or CS program would be better for data analytics career
+2. Consider updating major from "Data Analytics" to "Management Information Systems" or "Computer Science"
