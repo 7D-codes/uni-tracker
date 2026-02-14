@@ -62,7 +62,6 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedUniversityId, setSelectedUniversityId] = useState<number | null>(null);
-  const [showProfileModal, setShowProfileModal] = useState(false);
 
   const fetchStats = async () => {
     try {
@@ -112,7 +111,6 @@ function App() {
 
   const handleEditProfile = () => {
     setSelectedUniversityId(null);
-    setShowProfileModal(true);
     setView('settings');
   };
 
@@ -291,7 +289,6 @@ function App() {
           universityId={selectedUniversityId}
           onClose={handleCloseDetail}
           onEditProfile={handleEditProfile}
-          onUpdate={refresh}
         />
       )}
     </div>

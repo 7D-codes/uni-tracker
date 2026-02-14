@@ -63,7 +63,6 @@ interface Props {
   universityId: number;
   onClose: () => void;
   onEditProfile: () => void;
-  onUpdate: () => void;
 }
 
 const statusConfig: Record<string, { label: string; color: string; icon: string }> = {
@@ -75,7 +74,7 @@ const statusConfig: Record<string, { label: string; color: string; icon: string 
   waitlisted: { label: 'Waitlisted', color: '#a889bd', icon: '⏳' },
 };
 
-export function UniversityDetail({ universityId, onClose, onEditProfile, onUpdate }: Props) {
+export function UniversityDetail({ universityId, onClose, onEditProfile }: Props) {
   const [university, setUniversity] = useState<University | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -136,7 +135,7 @@ export function UniversityDetail({ universityId, onClose, onEditProfile, onUpdat
     return { text: formatted, days, status: 'normal' as const };
   };
 
-  const getRequirementStatus = (type: string, uniValue?: number, userValue?: number, count?: number) => {
+  const getRequirementStatus = (_type: string, uniValue?: number, userValue?: number, count?: number) => {
     if (!uniValue && !count) return { status: 'not-required' as const, label: 'Not Required' };
     
     if (count !== undefined) {
