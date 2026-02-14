@@ -1,12 +1,55 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { UniversityService, TaskService, initDatabase } from './api/db.js';
+import { UniversityService, TaskService, ProfileService, TaskGenerator, initDatabase } from './api/db.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 app.use(express.json());
 // API Routes
+// Profile Routes (UT-001)
+app.get('/api/profile', async (req, res) => {
+    try {
+        let profile = await ProfileService.getProfile();
+        // Create default profile if none exists
+        if (!profile) {
+            profile = await ProfileService.createDefaultProfile();
+        }
+        res.json(profile);
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+app.post('/api/profile', async (req, res) => {
+    try {
+        const updates = req.body;
+        const profile = await ProfileService.updateProfile(updates);
+        // Generate tasks based on profile update
+        const updatedFields = Object.keys(updates);
+        if (updatedFields.length > 0) {
+            try {
+                await TaskGenerator.generateTasksForProfileUpdate(updatedFields);
+            }
+            catch (e) {
+                console.log('Task generation failed:', e);
+            }
+        }
+        res.json(profile);
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+app.get('/api/profile/readiness', async (req, res) => {
+    try {
+        const readiness = await ProfileService.getReadinessScore();
+        res.json(readiness);
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 // Universities
 app.get('/api/universities', async (req, res) => {
     try {
@@ -52,6 +95,17 @@ app.delete('/api/universities/:id', async (req, res) => {
     try {
         await UniversityService.delete(Number(req.params.id));
         res.json({ success: true });
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+// Task Generation Endpoint (UT-002)
+app.post('/api/universities/:id/generate-tasks', async (req, res) => {
+    try {
+        const universityId = Number(req.params.id);
+        const tasks = await TaskGenerator.generateTasksForUniversity(universityId);
+        res.json({ success: true, tasksCreated: tasks.length, tasks });
     }
     catch (error) {
         res.status(500).json({ error: error.message });
