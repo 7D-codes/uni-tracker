@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import { UniversityList } from './components/UniversityList';
+import { UniversityDetail } from './components/UniversityDetail';
 import { Dashboard } from './components/Dashboard';
 import { AddUniversity } from './components/AddUniversity';
 import { Tasks } from './components/Tasks';
@@ -60,6 +61,8 @@ function App() {
   const [universities, setUniversities] = useState<University[]>([]);
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedUniversityId, setSelectedUniversityId] = useState<number | null>(null);
+  const [showProfileModal, setShowProfileModal] = useState(false);
 
   const fetchStats = async () => {
     try {
@@ -97,6 +100,20 @@ function App() {
   const handleNavClick = (newView: View) => {
     setView(newView);
     setMobileMenuOpen(false);
+  };
+
+  const handleViewUniversity = (id: number) => {
+    setSelectedUniversityId(id);
+  };
+
+  const handleCloseDetail = () => {
+    setSelectedUniversityId(null);
+  };
+
+  const handleEditProfile = () => {
+    setSelectedUniversityId(null);
+    setShowProfileModal(true);
+    setView('settings');
   };
 
   const getPageTitle = () => {
@@ -259,6 +276,7 @@ function App() {
                 universities={universities}
                 loading={loading}
                 onUpdate={refresh}
+                onView={handleViewUniversity}
               />
             )}
             {view === 'tasks' && <Tasks />}
@@ -266,6 +284,16 @@ function App() {
           </div>
         </main>
       </div>
+
+      {/* University Detail Modal */}
+      {selectedUniversityId && (
+        <UniversityDetail
+          universityId={selectedUniversityId}
+          onClose={handleCloseDetail}
+          onEditProfile={handleEditProfile}
+          onUpdate={refresh}
+        />
+      )}
     </div>
   );
 }

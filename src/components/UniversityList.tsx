@@ -35,6 +35,7 @@ interface Props {
   universities: University[];
   loading: boolean;
   onUpdate: () => void;
+  onView: (id: number) => void;
 }
 
 const statusConfig: Record<string, { label: string; icon: string }> = {
@@ -46,7 +47,7 @@ const statusConfig: Record<string, { label: string; icon: string }> = {
   waitlisted: { label: 'Waitlisted', icon: '⏳' },
 };
 
-export function UniversityList({ universities, loading, onUpdate }: Props) {
+export function UniversityList({ universities, loading, onUpdate, onView }: Props) {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<Partial<University>>({});
   const [filter, setFilter] = useState<string>('all');
@@ -367,6 +368,13 @@ export function UniversityList({ universities, loading, onUpdate }: Props) {
                   </div>
 
                   <div className="uni-card-footer">
+                    <button className="btn btn-primary" onClick={() => onView(uni.id)}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                      View
+                    </button>
                     <button className="btn btn-secondary" onClick={() => handleEdit(uni)}>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />

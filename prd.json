@@ -47,9 +47,9 @@
         "Show application deadline countdown",
         "Related tasks for this university"
       ],
-      "status": "todo",
+      "status": "done",
       "priority": "high",
-      "notes": "Backend support ready (universities.requirements JSON, profile data, tasks). Frontend feature - reads from universities table + profile table + tasks table."
+      "notes": "UniversityDetail.tsx component created with editorial/magazine aesthetic. Features: Hero section with ranking/status, deadline countdown with visual urgency, requirement matching with color-coded status (green/yellow/red), quick edit links to profile, related tasks list with animations. Integrated into App.tsx with onView handler."
     },
     {
       "id": "UT-004",

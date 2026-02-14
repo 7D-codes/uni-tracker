@@ -1,170 +1,78 @@
-# Uni-Tracker Implementation Progress
+# Uni-Tracker Progress Log
 
-## Date: 2026-02-14
+## 2026-02-14 - UT-003: University Detail View with Requirement Matching
 
----
+### Completed
+- Created `UniversityDetail.tsx` component with stunning editorial/magazine aesthetic
+- Created `UniversityDetail.css` with distinctive styling:
+  - Canela + Satoshi font pairing for luxury feel
+  - Asymmetric hero section with gradient overlays and pattern backgrounds
+  - Animated entrance transitions (slide-in + fade)
+  - Tabbed interface (Overview / Requirements)
+  - Color-coded requirement matching (green/yellow/red)
+  - Deadline countdown with urgency indicators
+  - Quick edit links to profile
+  - Related tasks display with staggered animations
 
-## UT-004: Database Schema Updates ✅ COMPLETE
+### Features Implemented
+1. **Full University Details Display**
+   - Name, location, program, major
+   - Ranking badge with special styling for top 10
+   - Status badge with appropriate colors
+   - Priority indicator
 
-### Implemented:
-1. **Migration System**
-   - Added `schema_migrations` table to track applied migrations
-   - Migration version 1: Initial schema (universities + tasks tables)
-   - Migration version 2: New profile table + requirements column + profileItemType
+2. **Requirements Breakdown**
+   - SAT: Shows min/avg scores vs user's actual score
+   - IELTS/TOEFL: Shows minimum vs user's score
+   - Transcripts: Shows status and count
+   - Recommendations: Shows count needed vs user's count
+   - Essays: Shows count + user's statement status
+   - Interview: Shows if required and user's status
 
-2. **New Tables**
-   - `profile` table with fields:
-     - id, satTarget, satActual, ieltsScore, toeflScore
-     - transcriptStatus ('missing'|'requested'|'received'|'submitted')
-     - recommendationsCount, statementStatus ('not_started'|'drafting'|'reviewing'|'complete')
-     - feeBudget, updatedAt
-   
-   - Updated `tasks` table:
-     - Added `profileItemType` column (links task to profile field)
-     - Index on profileItemType for fast lookups
+3. **Color-Coded Status System**
+   - Green (#7eb77f): Complete/meets requirement
+   - Yellow (#e6c86e): Partial/below target
+   - Red (#d67070): Missing/not started
+   - Gray (#6b6560): Not required
 
-3. **Updated universities table**
-   - Added `requirements` TEXT column (stores JSON)
-   - Migration auto-populates requirements from existing columns (satAvg, ieltsMin, etc.)
+4. **Quick Edit Links**
+   - Click any requirement card to open profile edit
+   - Hover effect reveals "Edit" hint
+   - Seamless navigation to settings
 
-4. **Data Preservation**
-   - All 7 existing universities preserved
-   - Requirements JSON generated for each:
-     - Stanford: SAT(1500), IELTS(7.5), TOEFL(100), Recs(2), Essays(2)
-     - Oxford: IELTS(7.0), Essays(1), Interview
-     - KAUST: SAT(1400), IELTS(6.5)
-     - Others: empty requirements object
+5. **Deadline Countdown**
+   - Visual countdown with days remaining
+   - Urgency styling (red for <7 days, yellow for <30)
+   - Passed deadline indicator
 
----
+6. **Related Tasks**
+   - Shows tasks linked to this university
+   - Pending and completed task sections
+   - Status indicators with color coding
+   - Staggered entrance animations
 
-## UT-001: Profile Tab Backend ✅ COMPLETE
+### Integration
+- Updated `App.tsx` to import and render UniversityDetail
+- Added `selectedUniversityId` state management
+- Added `handleViewUniversity`, `handleCloseDetail`, `handleEditProfile` handlers
+- Updated `UniversityList.tsx` to accept `onView` prop
+- Added "View" button to university cards
 
-### Implemented:
-1. **ProfileService** (api/db.ts)
-   - `getProfile()` - Returns profile or undefined
-   - `createDefaultProfile()` - Creates profile with default values
-   - `updateProfile(updates)` - Updates profile fields
-   - `getReadinessScore()` - Calculates overall readiness %
+### Design Decisions
+- **Aesthetic**: Editorial/Magazine - refined, luxurious, distinctive
+- **Typography**: Canela (display) + Satoshi (body) - avoids generic fonts
+- **Layout**: Asymmetric hero, generous whitespace, sharp corners (2px radius)
+- **Motion**: CSS transitions, staggered reveals, smooth modals
+- **Color**: Warm accent (#e8a87c) on dark background (#0d0d0d)
 
-2. **API Endpoints** (server.ts)
-   - `GET /api/profile` - Returns profile (creates default if none)
-   - `POST /api/profile` - Updates profile fields
-   - `GET /api/profile/readiness` - Returns readiness breakdown
+### Files Modified
+- `/src/components/UniversityDetail.tsx` - NEW
+- `/src/components/UniversityDetail.css` - NEW
+- `/src/App.tsx` - Modified
+- `/src/components/UniversityList.tsx` - Modified
+- `/prd.json` - Updated UT-003 status to "done"
 
-3. **Readiness Calculation**
-   - 6 items tracked: SAT, IELTS/TOEFL, Transcripts, Recommendations, Statement, Fee Budget
-   - Returns: score (0-100), completed count, total count, item details
-
----
-
-## UT-002: Task Generation Logic ✅ COMPLETE
-
-### Implemented:
-1. **TaskGenerator Service** (api/db.ts)
-   - `generateTasksForUniversity(universityId)` - Creates suggested tasks based on requirements vs profile
-   - `generateTasksForProfileUpdate(updatedFields)` - Re-generates tasks when profile changes
-
-2. **Task Generation Rules:**
-   - SAT required but no score → "Take SAT for {uni}"
-   - Score below minimum → "Retake SAT for {uni}"
-   - IELTS/TOEFL required but no score → "Take English Proficiency Test"
-   - Transcripts required but missing → "Request transcripts"
-   - Recommendations required but insufficient → "Request recommendation letters"
-   - Essays required but statement not started → "Write essays"
-   - Interview required → "Prepare for interview"
-
-3. **Task Properties:**
-   - Due date: 30 days before university deadline (if available)
-   - Status: 'suggested' (can be accepted/edited/deleted by user)
-   - Priority: 'high' for requirements, 'medium' for optional
-   - profileItemType: links to relevant profile field
-
-4. **Auto-Generation Triggers:**
-   - When university is created via POST /api/universities
-   - When profile is updated via POST /api/profile
-   - Manual trigger via POST /api/universities/:id/generate-tasks
-
----
-
-## API Testing Results
-
-All endpoints tested and working:
-
-```bash
-# Get profile (auto-creates default)
-GET /api/profile → {"id":1,"transcriptStatus":"missing",...}
-
-# Update profile
-POST /api/profile {"satTarget":1500,"satActual":1400,"ieltsScore":7.0}
-→ Returns updated profile
-
-# Get readiness score
-GET /api/profile/readiness
-→ {"score":33,"total":6,"completed":2,"items":[...]}
-
-# Generate tasks manually
-POST /api/universities/2/generate-tasks
-→ {"success":true,"tasksCreated":2,"tasks":[...]}
-```
-
----
-
-## Decisions Made
-
-1. **Task Status 'suggested'**: New status for auto-generated tasks. User can:
-   - Accept (change status to 'todo')
-   - Edit (modify title/description)
-   - Delete (remove entirely)
-
-2. **Due Date Calculation**: Tasks due 30 days before university deadline. If no deadline, no due date set.
-
-3. **Migration Strategy**: Added schema_migrations table to track which migrations ran. Allows incremental schema updates without data loss.
-
-4. **Requirements JSON Structure**: Flexible schema per university:
-   ```typescript
-   {
-     sat?: { required: boolean; minScore?: number; avgScore?: number };
-     ielts?: { required: boolean; minScore?: number };
-     toefl?: { required: boolean; minScore?: number };
-     transcripts?: { required: boolean; count?: number };
-     recommendations?: { required: boolean; count?: number };
-     essays?: { required: boolean; count?: number };
-     interview?: { required: boolean };
-     applicationFee?: { amount?: number; waiverAvailable?: boolean };
-   }
-   ```
-
-5. **Profile Defaults**: New profiles start with:
-   - transcriptStatus: 'missing'
-   - recommendationsCount: 0
-   - statementStatus: 'not_started'
-
----
-
-## Next Steps for Frontend (UT-003)
-
-Frontend can now use these endpoints:
-
-1. **Profile Tab**
-   - Fetch: GET /api/profile
-   - Save: POST /api/profile
-   - Progress: GET /api/profile/readiness
-
-2. **Task List**
-   - Fetch all: GET /api/tasks
-   - Tasks include profileItemType for linking to profile
-
-3. **University Detail**
-   - Fetch university: GET /api/universities/:id
-   - Parse requirements JSON to show requirements
-   - Compare against profile data
-   - Fetch related tasks: Filter from GET /api/tasks
-
----
-
-## Files Modified
-
-- `api/db.ts` - Added ProfileService, TaskGenerator, migrations
-- `server.ts` - Added profile endpoints and task generation endpoint
-- `prd.json` - Updated story statuses
-- `progress.txt` - This file
+### Next Steps
+- Consider adding Profile modal/section for UT-003 integration
+- Could enhance with more animations or micro-interactions
+- Possible: Add "Generate Tasks" button in detail view
